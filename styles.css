@@ -1,0 +1,80 @@
+:root {
+    --bg-main: #f9f9f9;
+    --text-main: #333;
+    --font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--font-stack);
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #2c3e50;
+    color: white;
+}
+
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.viz-section {
+    margin-bottom: 4rem;
+    padding: 2rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.black-hat-section {
+    background: #fff5f5;
+    border-left: 5px solid #e74c3c;
+}
+
+.white-hat-section {
+    border-left: 5px solid #27ae60;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+.black-hat-section h2 {
+    color: #c0392b;
+    font-family: 'Impact', sans-serif;
+    letter-spacing: 1px;
+}
+
+.chart-container {
+    width: 100%;
+    /* Removed fixed height so the D3 viewBox handles responsive scaling */
+    margin: 2rem 0;
+    position: relative;
+}
+
+.writeup {
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.assignment-details {
+    background: #eef2f5;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-top: 3rem;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 3rem 0;
+}
