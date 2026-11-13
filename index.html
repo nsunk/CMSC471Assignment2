@@ -4,71 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethical Visualization: White Hat vs Black Hat</title>
+    <!-- Modern Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Data Visualization: The Ethics of Representation</h1>
-        <p>A comparative analysis of global secondary school enrollment using the World Bank Gender Equality Indicators dataset.</p>
+    <header class="page-header">
+        <h1>Title</h1>
+        <p>description</p>
     </header>
 
     <main>
         <!-- White Hat Section -->
         <section class="viz-section white-hat-section">
-            <h2>White Hat: Global Convergence in Education</h2>
+            <div class="section-header">
+                <h2>White Hat: Global Convergence in Education</h2>
+                <div class="controls">
+                    <label for="white-slider"><strong>Explore Timeline (Start Year): </strong><span id="white-year-label">1975</span></label>
+                    <input type="range" id="white-slider" min="1975" max="2005" value="1975" step="1">
+                </div>
+            </div>
+
             <div id="white-hat-viz" class="chart-container"></div>
             
             <div class="writeup">
                 <h3>Design Rationale & Transparency</h3>
-                <p><strong>Dataset & Transformations:</strong> This visualization uses the World Bank Gender Equality Indicators dataset. To provide a comprehensive global view, the data was aggregated by year, calculating the mean of the "School enrollment, secondary, female (% gross)" and "male (% gross)" columns across all available countries, filtering out years with missing data.</p>
-                
-                <p><strong>Design Choices:</strong> The goal of this "white hat" visualization is to provide an objective, transparent look at the historical progression of gender equality in education.</p>
-                <ul>
-                    <li><strong>Axes:</strong> </li>
-                    <li><strong>Encodings:</strong> </li>
-                    <li><strong>Clarity:</strong> </li>
-                </ul>
-                <p>The resulting insight is a truthful reflection of the data: while a gap existed historically, global secondary school enrollment for both genders has risen significantly and largely converged in recent decades.</p>
+                <p><strong>Dataset & Transformations:</strong> </p>
+                <p><strong>Interactive & Honest Design:</strong> </p>
             </div>
         </section>
 
-        <hr>
+        <hr class="divider">
 
         <!-- Black Hat Section -->
         <section class="viz-section black-hat-section">
-            <h2>Black Hat: THE GENDER ENROLLMENT CRISIS</h2>
+            <div class="section-header">
+                <h2>Black Hat: THE GENDER ENROLLMENT CRISIS</h2>
+                <div class="controls black-controls">
+                    <label for="black-slider"><strong>Analyze Specific Year: </strong><span id="black-year-label">2010</span></label>
+                    <input type="range" id="black-slider" min="1990" max="2016" value="2010" step="1">
+                </div>
+            </div>
+
             <div id="black-hat-viz" class="chart-container"></div>
             
             <div class="writeup">
                 <h3>Manipulative Techniques Used</h3>
-                <p><strong>Deceptive Filtering:</strong> This "black hat" visualization intentionally distorts the viewer’s perception of the exact same dataset to manufacture a false narrative of inequality and decline. Instead of showing the full historical context, the data is selected to only show a narrow 5-year window where minor fluctuations naturally occurred.</p>
-                
-                <p><strong>Visual Distortions:</strong></p>
-                <ul>
-                    <li><strong>Truncated Y-Axis:</strong> </li>
-                    <li><strong>Editorialized Chart Elements:</strong> </li>
-                <p>By stripping away context and zooming in on a microscopic variance, this chart lies with accurate data, leading the viewer to walk away with a fundamentally incorrect understanding of global educational trends.</p>
+                <p><strong>Violating the Area Principle:</strong> </p>
+                <p><strong>Misleading UI & Encodings:</strong> </p>
             </div>
         </section>
-
-        <!-- Required Assignment Sections -->
-        <section class="assignment-details">
-            <h3>References</h3>
-            <ul>
-                <li>Dataset: Gender Equality Indicators 1960–2017 (curated subset), sourced from the World Bank.</li>
-                <li>Visualization Library: D3.js (v7)</li>
-            </ul>
-
-            <h3>Development Process</h3>
-            <p><strong>Time Spent:</strong> </p>
-            <p><strong>Process & Challenges:</strong>   </p>
-
-            <h3>AI Usage</h3>
-            <p>AI assistance was used to ...</p>
-        </section>
     </main>
-    
     <script src="script.js"></script>
 </body>
 </html>
