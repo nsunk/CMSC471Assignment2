@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ethical Visualization: White Hat vs Black Hat</title>
-    <!-- Modern Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Merriweather:wght@300;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:wght@300;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
 </head>
@@ -21,14 +20,23 @@
         <!-- White Hat Section -->
         <section class="viz-section white-hat-section">
             <div class="section-header">
-                <h2>White Hat: Global Convergence in Education</h2>
+                <h2>White Hat: The Illusion of Parity</h2>
                 <div class="controls">
-                    <label for="white-slider"><strong>Explore Timeline (Start Year): </strong><span id="white-year-label">1975</span></label>
-                    <input type="range" id="white-slider" min="1975" max="2005" value="1975" step="1">
+                    <label for="white-country"><strong>Region: </strong></label>
+                    <select id="white-country" class="ui-select"></select>
+                    
+                    <label for="white-slider" style="margin-left: 20px;"><strong>Year: </strong><span id="white-year-label">2018</span></label>
+                    <input type="range" id="white-slider" min="2010" max="2018" value="2018" step="1">
+
+                    <!-- NEW: Reset Zoom Button -->
+                    <button id="reset-zoom-btn" class="ui-button" style="margin-left: 20px;">Reset Zoom</button>
                 </div>
             </div>
 
-            <div id="white-hat-viz" class="chart-container"></div>
+            <div class="dual-chart-layout">
+                <div id="white-edu-viz" class="chart-container half-chart"></div>
+                <div id="white-emp-viz" class="chart-container half-chart"></div>
+            </div>
             
             <div class="writeup">
                 <h3>Design Rationale & Transparency</h3>
@@ -42,10 +50,10 @@
         <!-- Black Hat Section -->
         <section class="viz-section black-hat-section">
             <div class="section-header">
-                <h2>Black Hat: THE GENDER ENROLLMENT CRISIS</h2>
+                <h2>Black Hat: THE GENDER WORKFORCE DIVIDE</h2>
                 <div class="controls black-controls">
-                    <label for="black-slider"><strong>Analyze Specific Year: </strong><span id="black-year-label">2010</span></label>
-                    <input type="range" id="black-slider" min="1990" max="2016" value="2010" step="1">
+                    <label for="black-slider"><strong>Analyze Market: </strong><span id="black-year-label">2018</span></label>
+                    <input type="range" id="black-slider" min="2010" max="2018" value="2018" step="1">
                 </div>
             </div>
 
@@ -53,8 +61,8 @@
             
             <div class="writeup">
                 <h3>Manipulative Techniques Used</h3>
-                <p><strong>Violating the Area Principle:</strong> </p>
-                <p><strong>Misleading UI & Encodings:</strong> </p>
+                <p><strong>Violating the Baseline & Misleading Axes:</strong> </p>
+                <p><strong>Deceptive Interactivity & Encodings:</strong> </p>
             </div>
         </section>
     </main>
