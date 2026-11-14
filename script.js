@@ -22,7 +22,7 @@ const IND_EMP_F = "Employers, female (% of female employment) (modeled ILO estim
 // --- OVERALL LABOR FORCE (Employment Context) & BLACK HAT ---
 const IND_LFP_M = "Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)";
 const IND_LFP_F = "Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)";
-const BLACK_HAT_REGIONS = ['United States', 'Japan', 'Germany', 'Brazil', 'India', 'World'];
+
 
 // Colors for White Hat (Blue & Orange)
 const COLOR_MALE = "#1976D2"; 
@@ -220,65 +220,131 @@ function updateWhiteHatVisuals(countryCode, targetYear) {
     drawDumbbell('#white-emp-viz', "Employment Hierarchy", empData);
 }
 
-// ... [Keep your createBlackHatVis(targetYear) exactly the same as before!] ...
+// --- BLACK HAT: "Women's Workforce Momentum" ---
+// Deceptive choices (see write-up):
+//  1. Cherry-picked countries: only G20 members where women's participation rose
+//     (drops India, China, US, Russia, Saudi Arabia, the World aggregate, etc.)
+//     but the chart labels them simply as "G20 economies".
+//  2. Relative % change instead of percentage-point change: women start from a lower
+//     base, so the same real gain looks much larger for women than for men.
+//  3. Fixed 2010 baseline + no actual rates shown, so the remaining gap is invisible.
+const BLACK_HAT_COUNTRIES = ['Japan', 'Germany', 'United Kingdom', 'Korea, Rep.', 'Italy', 'Brazil', 'Mexico', 'Turkey', 'Argentina'];
+const BLACK_BASE_YEAR = "2010";
+
 function createBlackHatVis(targetYear) {
-    const width = 900, height = 450;
-    const margin = {top: 40, right: 60, bottom: 60, left: 60};
+    const width = 900, height = 560;
+    const margin = {top: 150, right: 70, bottom: 70, left: 150};
     const innerW = width - margin.left - margin.right;
     const innerH = height - margin.top - margin.bottom;
 
     d3.select('#black-hat-viz').selectAll("*").remove();
     const svg = d3.select('#black-hat-viz').append('svg')
         .attr("viewBox", [0, 0, width, height])
-        .attr("style", "max-width: 100%; height: auto; font: 12px 'Inter', sans-serif;");
+        .attr("style", "max-width: 100%; height: auto; font: 14px 'Inter', sans-serif;");
     const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
+    // 1. DATA: percent change since 2010 for each country, women vs. men
+    const pctChange = (row, yr) => (+row[yr] / +row[BLACK_BASE_YEAR] - 1) * 100;
     let barData = [];
-    BLACK_HAT_REGIONS.forEach(country => {
-        const countryRows = globalData.filter(d => d['Country Name'] === country);
-        const lfpM = countryRows.find(d => d['Indicator Name'] === IND_LFP_M);
-        const lfpF = countryRows.find(d => d['Indicator Name'] === IND_LFP_F);
-        
-        if (lfpM && lfpF && lfpM[targetYear] && lfpF[targetYear]) {
-            barData.push({ country: country, gender: "Female", val: +lfpF[targetYear] });
-            barData.push({ country: country, gender: "Male", val: +lfpM[targetYear] });
+    BLACK_HAT_COUNTRIES.forEach(country => {
+        const rows = globalData.filter(d => d['Country Name'] === country);
+        const f = rows.find(d => d['Indicator Name'] === IND_LFP_F);
+        const m = rows.find(d => d['Indicator Name'] === IND_LFP_M);
+        if (f && m && f[targetYear] && m[targetYear] && f[BLACK_BASE_YEAR] && m[BLACK_BASE_YEAR]) {
+            barData.push({ country, female: pctChange(f, targetYear), male: pctChange(m, targetYear) });
         }
     });
+    barData.sort((a, b) => b.female - a.female);
 
-    const x = d3.scaleBand().domain(BLACK_HAT_REGIONS).range([0, innerW]).padding(0.3);
-    const FALSE_BASELINE = 60;
-    const y = d3.scaleLinear().domain([10, 90]).range([innerH, 0]);
+    const avgF = d3.mean(barData, d => d.female);
+    const avgM = d3.mean(barData, d => d.male);
+    const nRising = barData.filter(d => d.female > 0).length;
 
+    // 2. TITLES (same style as the white hat charts, so it reads as part of the same report)
+    svg.append("text").attr("x", 30).attr("y", 32)
+        .text("Closing the Gap: Women Are Entering the Workforce at a Record Pace")
+        .style("font-size", "20px").style("font-weight", "800").style("fill", "#111");
+    svg.append("text").attr("x", 30).attr("y", 54)
+        .text(`Growth in labor force participation since 2010, G20 economies (${targetYear})`)
+        .style("font-size", "13px").style("fill", "#777").style("font-style", "italic");
+
+    // 3. HEADLINE STATS
+    const stats = [
+        { num: `${avgF >= 0 ? "+" : ""}${avgF.toFixed(1)}%`, label: "Average growth, women", color: COLOR_FEMALE },
+        { num: `${avgM >= 0 ? "+" : ""}${avgM.toFixed(1)}%`, label: "Average growth, men", color: COLOR_MALE },
+        { num: `${nRising} of ${barData.length}`, label: "Economies where women's participation is rising", color: "#333" }
+    ];
+    const statG = svg.append("g").attr("transform", "translate(30, 98)");
+    stats.forEach((s, i) => {
+        const g = statG.append("g").attr("transform", `translate(${i * 230}, 0)`);
+        g.append("text").text(s.num).style("font-size", "30px").style("font-weight", "800").style("fill", s.color);
+        g.append("text").attr("y", 20).text(s.label).style("font-size", "12px").style("fill", "#777");
+    });
+
+    // Legend (same as white hat)
+    const legend = svg.append("g").attr("transform", `translate(${width - 160}, 52)`);
+    legend.append("circle").attr("r", 6).attr("fill", COLOR_MALE);
+    legend.append("text").attr("x", 10).attr("y", 4).text("Men").style("font-size", "13px").style("font-weight", "600").style("fill", "#333");
+    legend.append("circle").attr("cx", 60).attr("r", 6).attr("fill", COLOR_FEMALE);
+    legend.append("text").attr("x", 70).attr("y", 4).text("Women").style("font-size", "13px").style("font-weight", "600").style("fill", "#333");
+
+    // 4. SCALES & AXES (zero-based, which looks honest)
+    const y = d3.scaleBand().domain(barData.map(d => d.country)).range([0, innerH]).padding(0.25);
+    const ySub = d3.scaleBand().domain(["female", "male"]).range([0, y.bandwidth()]).padding(0.1);
+    const maxAbs = d3.max(barData, d => Math.max(Math.abs(d.female), Math.abs(d.male)));
+    const x = d3.scaleLinear().domain([-5, Math.max(10, Math.ceil(maxAbs / 5) * 5)]).range([0, innerW]);
+
+    chart.append("g").attr("stroke-opacity", 0.1)
+        .call(d3.axisBottom(x).ticks(8).tickSize(innerH).tickFormat(""));
     chart.append("g").attr("transform", `translate(0,${innerH})`)
-        .call(d3.axisBottom(x).tickSizeOuter(0))
-        .selectAll("text").style("fill", "#333").style("font-size", "13px").style("font-weight", "600").attr("dy", "10px");
+        .call(d3.axisBottom(x).ticks(8).tickFormat(d => d + "%").tickSizeOuter(0))
+        .selectAll("text").style("font-size", "12px").style("fill", "#666");
+    chart.append("g").call(d3.axisLeft(y).tickSize(0))
+        .selectAll("text").style("font-size", "14px").style("font-weight", "600").style("fill", "#333").attr("dx", "-10px");
+    chart.append("line").attr("x1", x(0)).attr("x2", x(0)).attr("y1", 0).attr("y2", innerH)
+        .attr("stroke", "#999").attr("stroke-width", 1.5);
+    chart.append("text").attr("x", innerW / 2).attr("y", innerH + 42).attr("text-anchor", "middle")
+        .text("Growth since 2010").style("font-size", "13px").style("fill", "#555");
 
-    chart.append("g").call(d3.axisLeft(y).ticks(8)).attr("stroke", "#ccc")
-        .selectAll("text").style("fill", "#666").style("font-size", "11px");
-
-    chart.append("line")
-        .attr("x1", 0).attr("x2", innerW).attr("y1", y(FALSE_BASELINE)).attr("y2", y(FALSE_BASELINE))
-        .attr("stroke", "#333").attr("stroke-width", 2);
-
-    const bars = chart.append("g").selectAll("rect").data(barData).join("rect")
-        .attr("x", d => x(d.country)).attr("width", x.bandwidth())
-        .attr("y", d => Math.min(y(d.val), y(FALSE_BASELINE)))
-        .attr("height", d => Math.abs(y(d.val) - y(FALSE_BASELINE)))
-        .attr("fill", d => d.gender === "Male" ? "#2980b9" : "#d32f2f").attr("opacity", 0.9);
-
+    // 5. BARS
     let tooltip = d3.select(".tooltip-black");
     if (tooltip.empty()) tooltip = d3.select("body").append("div").attr("class", "tooltip-black");
 
-    bars.on("mouseover", function(event, d) {
-        d3.select(this).attr("opacity", 1).attr("stroke", "#000").attr("stroke-width", 1.5);
-        const color = d.gender === "Female" ? "#d32f2f" : "#2980b9";
-        tooltip.style("opacity", 1).style("color", color).style("border-color", color)
-            .html(`${d.gender.toUpperCase()}<br/>RATE: ${d.val.toFixed(1)}%`)
-            .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
-    }).on("mouseout", function() {
-        d3.select(this).attr("opacity", 0.9).attr("stroke", "none");
-        tooltip.style("opacity", 0);
-    });
+    const long = barData.flatMap(d => [
+        { country: d.country, key: "female", val: d.female },
+        { country: d.country, key: "male", val: d.male }
+    ]);
+    chart.append("g").selectAll("rect").data(long).join("rect")
+        .attr("y", d => y(d.country) + ySub(d.key))
+        .attr("height", ySub.bandwidth())
+        .attr("x", d => x(Math.min(0, d.val)))
+        .attr("width", d => Math.abs(x(d.val) - x(0)))
+        .attr("rx", 3)
+        .attr("fill", d => d.key === "female" ? COLOR_FEMALE : COLOR_MALE)
+        .on("mousemove", function(event, d) {
+            d3.select(this).attr("stroke", "#000").attr("stroke-width", 1.5);
+            const who = d.key === "female" ? "Women" : "Men";
+            const color = d.key === "female" ? COLOR_FEMALE : COLOR_MALE;
+            tooltip.style("opacity", 1).style("color", color).style("border-color", color)
+                .html(`${d.country}<br/>${who}: ${d.val >= 0 ? "+" : ""}${d.val.toFixed(1)}% since 2010`)
+                .style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px");
+        })
+        .on("mouseout", function() {
+            d3.select(this).attr("stroke", "none");
+            tooltip.style("opacity", 0);
+        });
+
+    // value labels on women's bars
+    chart.append("g").selectAll("text").data(barData).join("text")
+        .attr("x", d => x(Math.max(0, d.female)) + 6)
+        .attr("y", d => y(d.country) + ySub("female") + ySub.bandwidth() / 2 + 4)
+        .text(d => `${d.female >= 0 ? "+" : ""}${d.female.toFixed(1)}%`)
+        .style("font-size", "11px").style("font-weight", "700").style("fill", COLOR_FEMALE);
+
+    // 6. SOURCE LINE
+    svg.append("text").attr("x", 30).attr("y", height - 12)
+        .text("Source: World Bank World Development Indicators; ILO modeled estimates. Growth = percent change in participation rate, 2010 to selected year.")
+        .style("font-size", "11px").style("fill", "#999");
 }
 
 function init() {
@@ -339,7 +405,10 @@ function init() {
             if (initialCode) {
                 updateWhiteHatVisuals(initialCode, maxYear.toString());
             }
-            createBlackHatVis(maxYear.toString());
+            // Black hat slider gets its own range (labor force data runs to 2019)
+            d3.select("#black-slider").attr("min", 2011).attr("max", 2019).property("value", 2019);
+            d3.select("#black-year-label").text(2019);
+            createBlackHatVis("2019");
 
             // --- EVENT LISTENERS ---
             d3.select("#white-slider").on("input", function() {
