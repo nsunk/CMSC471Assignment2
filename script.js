@@ -110,7 +110,22 @@ function drawDumbbell(containerId, chartTitle, dataArr) {
     if (tooltip.empty()) tooltip = d3.select("body").append("div").attr("class", "tooltip-white");
 
     function getTooltipHTML(d) {
-        let extra = "";
+        // 1. THE DATA CALCULATION: Find the absolute gap in percentage points
+        const gap = Math.abs(d.male - d.female);
+        
+        // Determine who is leading to make the tooltip even more informative
+        const leader = d.female > d.male ? "Women lead" : (d.male > d.female ? "Men lead" : "Parity");
+
+        let extra = `<div style="margin-top:6px; padding-top:6px; border-top:1px solid #ddd; font-size:11px; color:#555;">
+                        Gap: <strong>${gap.toFixed(1)} percentage points</strong> <em>(${leader})</em>
+                     </div>`;
+
+        return `
+            <strong style="font-size:14px;">${d.category}</strong><br/>
+            <span style="color:${COLOR_MALE}; font-weight:bold;">Men: ${d.male.toFixed(1)}%</span><br/>
+            <span style="color:${COLOR_FEMALE}; font-weight:bold;">Women: ${d.female.toFixed(1)}%</span>
+            ${extra}
+        `;
         // If it's an Education row, show overall enrollment
         if (d.total) {
             extra = `<div style="margin-top:6px; padding-top:6px; border-top:1px solid #ddd; font-size:11px; color:#555;">
