@@ -39,9 +39,27 @@
             </div>
             
             <div class="writeup">
-                <h3>Design Rationale & Transparency</h3>
-                <p><strong>Dataset & Transformations:</strong> </p>
-                <p><strong>Interactive & Honest Design:</strong> </p>
+                <p><strong>Dataset:</strong>The dataset used for this visualization was the raw Gender Equality Indicators 1960–2017 CSV file, 
+                  gender-raw-2021.csv. Given that the file contained very extensive raw data, we cleaned the data to ensure that all countries in the drop-down 
+                  filter had data for both education enrollment and employment. The visualization shows data from 2010-2019 with the slider because that time 
+                  frame was when the most countries had data for the areas we were looking for. In order to ensure that we were able to visualize as much 
+                  information as possible, we cleaned the data dynamically so the drop-down will change what countries are shown based on the year that is selected 
+                  on the slider; only countries with data for that year will be part of the drop-down. Another thing to note with our dataset is that since gross 
+                  enrollment values are used, it is possible for the enrollment rates for primary to exceed 100% because the way the metric in the dataset is 
+                  calculated is that the total number of children enrolled is divided by the number of children that are supposed to be enrolled, and it is possible 
+                  that the number of children enrolled is higher than the expected value. </p>
+                <p><strong>Design Choices:</strong>The Dumbbell plot specifically was chosen in order to show gaps between men and women in the two sectors, educational 
+                  enrollment and employment. This way, it would be clear how much the difference between the two is and how it changes as the level of education increases 
+                  and similarly with types of employment. Keeping in mind that green and red are most commonly the two colors that are difficult to distinguish for those 
+                  who are colorblind, we chose to use blue for men and orange for women as in the legend next to the title. We also used tooltips to make it clearer what 
+                  the exact percentages were and what the gap was for each category when the area near that "dumbbell" is hovered over. 
+                  Zooming was another important design choice and feature we included because for some years and countries, the gaps are quite small, so to ensure users 
+                  could clearly see the gap, we made it so you can zoom to more closely inspect the visualization. </p>
+                <p><strong>Clarity & Accuracy:</strong>To build on what was discussed above, to ensure the clarity of the data, we made sure there were no misleading visual cues 
+                  and everything was clearly labeled. We started the x-axis, which is where the percentages are denoted at 0%, and ended it just past 100% to account for the primary 
+                  education's enrollment percentages, which may go just past 100%. To keep the visualizations consistent and accurate, only countries with data for both charts are able 
+                  to be selected from the drop-down filters, and the years are limited to the 2010s to ensure the most amount of data is available to be modeled. As for the actual data, 
+                  all data cleaning and an in-depth explanation as to why we chose to use the data as we did were covered in the previous two paragraphs. </p>
             </div>
         </section>
 
@@ -64,6 +82,18 @@
                 <p><strong>Violating the Baseline & Misleading Axes:</strong> </p>
                 <p><strong>Deceptive Interactivity & Encodings:</strong> </p>
             </div>
+        </section>
+
+        <section class="viz-section">
+          <div class="writeup">
+            <p><strong>Data & Development Process: </strong>We used the raw data file from the Gender Equality Indicators 1960-2017 data set from the World Bank Data by Indicators. We didn’t 
+              use the curated CSV file as we wanted to have more raw data to work with.<br>
+              For group participation, Sammi and Nithya did the visualization code, including the white hat and black hat visualizations, with help from Harini. Harini worked on the page 
+              styling and HTML layout, wrote final write-up elements, and recorded the demo video with input from Sammi and Nithya. We spent roughly 10-15 people-hours in total. The parts 
+              that took the most time were analyzing the data and extracting accurate and clear visualizations from them and coming up with clear differences between the two visualizations. 
+              We spent a lot of time coming up with ways to make sure the white hat visualization is especially clear and easy to interpret for the audience, especially with the large dataset. </p>
+              <p><strong>AI Usage: </strong></p>
+          </div>
         </section>
     </main>
     <script src="script.js"></script>
