@@ -1,15 +1,15 @@
-// --- WHITE HAT: Education (Enrollment + Total Context) ---
+// --- WHITE HAT: Education (Enrollment + Total ) ---
 const IND_PRI_M = "School enrollment, primary, male (% gross)";
 const IND_PRI_F = "School enrollment, primary, female (% gross)";
-const IND_PRI_T = "School enrollment, primary (% gross)"; // Total Context
+const IND_PRI_T = "School enrollment, primary (% gross)"; // Total 
 
 const IND_SEC_M = "School enrollment, secondary, male (% gross)";
 const IND_SEC_F = "School enrollment, secondary, female (% gross)";
-const IND_SEC_T = "School enrollment, secondary (% gross)"; // Total Context
+const IND_SEC_T = "School enrollment, secondary (% gross)"; // Total 
 
 const IND_TER_M = "School enrollment, tertiary, male (% gross)";
 const IND_TER_F = "School enrollment, tertiary, female (% gross)";
-const IND_TER_T = "School enrollment, tertiary (% gross)"; // Total Context
+const IND_TER_T = "School enrollment, tertiary (% gross)"; // Total 
 
 // --- WHITE HAT: Employment Breakdown ---
 const IND_WAGE_M = "Wage and salaried workers, male (% of male employment) (modeled ILO estimate)";
@@ -19,7 +19,7 @@ const IND_SELF_F = "Self-employed, female (% of female employment) (modeled ILO 
 const IND_EMP_M = "Employers, male (% of male employment) (modeled ILO estimate)";
 const IND_EMP_F = "Employers, female (% of female employment) (modeled ILO estimate)";
 
-// --- OVERALL LABOR FORCE (Employment Context) & BLACK HAT ---
+// --- overall labor force (Employment Context) & BLACK HAT ---
 const IND_LFP_M = "Labor force participation rate, male (% of male population ages 15+) (modeled ILO estimate)";
 const IND_LFP_F = "Labor force participation rate, female (% of female population ages 15+) (modeled ILO estimate)";
 

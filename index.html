@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethical Visualization: White Hat vs Black Hat</title>
+    <title>EWhite Hat vs Black Hat Visualizations</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Merriweather:wght@300;700&display=swap" rel="stylesheet">
@@ -12,15 +12,14 @@
 </head>
 <body>
     <header class="page-header">
-        <h1>Title</h1>
-        <p>description</p>
+        <h1>White Hat vs Black Hat Visualizations</h1>
     </header>
 
     <main>
         <!-- White Hat Section -->
         <section class="viz-section white-hat-section">
             <div class="section-header">
-                <h2>White Hat: The Illusion of Parity</h2>
+                <h2>White Hat: Gender Gaps in Education and Employment</h2>
                 <div class="controls">
                     <label for="white-country"><strong>Region: </strong></label>
                     <select id="white-country" class="ui-select"></select>
@@ -39,7 +38,8 @@
             </div>
             
             <div class="writeup">
-                <p><strong>Dataset:</strong>The dataset used for this visualization was the raw Gender Equality Indicators 1960–2017 CSV file, 
+              <h3>Design & Description</h3>
+                <p><strong>Dataset: </strong> The dataset used for this visualization was the raw Gender Equality Indicators 1960–2017 CSV file, 
                   gender-raw-2021.csv. Given that the file contained very extensive raw data, we cleaned the data to ensure that all countries in the drop-down 
                   filter had data for both education enrollment and employment. The visualization shows data from 2010-2019 with the slider because that time 
                   frame was when the most countries had data for the areas we were looking for. In order to ensure that we were able to visualize as much 
@@ -48,14 +48,14 @@
                   enrollment values are used, it is possible for the enrollment rates for primary to exceed 100% because the way the metric in the dataset is 
                   calculated is that the total number of children enrolled is divided by the number of children that are supposed to be enrolled, and it is possible 
                   that the number of children enrolled is higher than the expected value. </p>
-                <p><strong>Design Choices:</strong>The Dumbbell plot specifically was chosen in order to show gaps between men and women in the two sectors, educational 
+                <p><strong>Design Choices: </strong> The Dumbbell plot specifically was chosen in order to show gaps between men and women in the two sectors, educational 
                   enrollment and employment. This way, it would be clear how much the difference between the two is and how it changes as the level of education increases 
                   and similarly with types of employment. Keeping in mind that green and red are most commonly the two colors that are difficult to distinguish for those 
                   who are colorblind, we chose to use blue for men and orange for women as in the legend next to the title. We also used tooltips to make it clearer what 
                   the exact percentages were and what the gap was for each category when the area near that "dumbbell" is hovered over. 
                   Zooming was another important design choice and feature we included because for some years and countries, the gaps are quite small, so to ensure users 
                   could clearly see the gap, we made it so you can zoom to more closely inspect the visualization. </p>
-                <p><strong>Clarity & Accuracy:</strong>To build on what was discussed above, to ensure the clarity of the data, we made sure there were no misleading visual cues 
+                <p><strong>Clarity & Accuracy: </strong> To build on what was discussed above, to ensure the clarity of the data, we made sure there were no misleading visual cues 
                   and everything was clearly labeled. We started the x-axis, which is where the percentages are denoted at 0%, and ended it just past 100% to account for the primary 
                   education's enrollment percentages, which may go just past 100%. To keep the visualizations consistent and accurate, only countries with data for both charts are able 
                   to be selected from the drop-down filters, and the years are limited to the 2010s to ensure the most amount of data is available to be modeled. As for the actual data, 
@@ -81,23 +81,28 @@
              <div class="writeup">
                 <h3>Manipulative Techniques Used</h3>
                 <p>This chart uses the same labor force participation data as our white hat employment view. It leads readers to believe that women are rapidly closing the workforce gap. In reality, the global gap barely moved between 2010 and 2019, staying at about 27 percentage points, and women's participation worldwide actually fell by about 1.5 points. Our techniques fall into all three rubric categories.</p>
-                <p><strong>Data Transformation:</strong> We show percent change in the participation rate since 2010 instead of percentage point change. Women start from a lower base, so the same real gain looks much bigger. Turkey's women gained about 7 points but the chart shows growth of nearly 27% and that outlier pulls up the average growth stat. We also cherry-picked the data by only showing the nine G20 members where women's participation rose and left out the rest. In India, China, United States, and Russia women's participation dropped by about 1 to 5 percentage points. The World aggregate is also left out because it would contradict the headline.</p>
-                <p><strong>Marks and Encodings:</strong> The bars only show growth from a 2010 baseline, so the actual participation rates never appear. Readers can't see that women in these countries still participate far less than men. Hovering over a bar only shows the growth since 2010, so the real rates stay hidden. Sorting the bars by women's growth puts the biggest orange bars at the top so the first impression is strong progress.</p>
-                <p><strong>Titles and Labels:</strong> The headline, "Women Are Entering the Workforce at a Record Pace," turns small changes into a dramatic story. The subtitle says "G20 economies" implies that the whole group is shown when only a subset is. The headline stats which show women's average growth far ahead of men's and every economy rising, present the cherry-picked results as an overall verdict.</p>
-                <p><strong>Design & Credibility: </strong>The chart copies the white hat's colors, fonts and legend, so it looks like part of the same honest report. It uses a zero-based axis, gridlines, a clear legend and a real source line, which are all signs of good practice. Every number on it is accurate, and the source line even states "percent change in participation rate," though most readers will read that as percentage points. The year slider makes the chart feel open to exploration, but every year uses the same countries and baseline, so readers always reach the same conclusion. Spotting the tricks takes checking which G20 countries are missing and knowing the difference between percent and percentage-point change.</p>
-                <p><strong>Impact:</strong> Someone could use this chart to argue that workplace gender policies are no longer needed. Each choice can be defended on its own (Ex: "we focused on major economies," "percent change is standard") which is what makes the deception hard to challenge.</p>
+                <p><strong>Data Transformation: </strong> We show percent change in the participation rate since 2010 instead of percentage point change. Women start from a lower base, so the same real gain looks much bigger. Turkey's women gained about 7 points but the chart shows growth of nearly 27% and that outlier pulls up the average growth stat. We also cherry-picked the data by only showing the nine G20 members where women's participation rose and left out the rest. In India, China, United States, and Russia women's participation dropped by about 1 to 5 percentage points. The World aggregate is also left out because it would contradict the headline.</p>
+                <p><strong>Marks and Encodings: </strong> The bars only show growth from a 2010 baseline, so the actual participation rates never appear. Readers can't see that women in these countries still participate far less than men. Hovering over a bar only shows the growth since 2010, so the real rates stay hidden. Sorting the bars by women's growth puts the biggest orange bars at the top so the first impression is strong progress.</p>
+                <p><strong>Titles and Labels: </strong> The headline, "Women Are Entering the Workforce at a Record Pace," turns small changes into a dramatic story. The subtitle says "G20 economies" implies that the whole group is shown when only a subset is. The headline stats which show women's average growth far ahead of men's and every economy rising, present the cherry-picked results as an overall verdict.</p>
+                <p><strong>Design & Credibility: </strong> The chart copies the white hat's colors, fonts and legend, so it looks like part of the same honest report. It uses a zero-based axis, gridlines, a clear legend and a real source line, which are all signs of good practice. Every number on it is accurate, and the source line even states "percent change in participation rate," though most readers will read that as percentage points. The year slider makes the chart feel open to exploration, but every year uses the same countries and baseline, so readers always reach the same conclusion. Spotting the tricks takes checking which G20 countries are missing and knowing the difference between percent and percentage-point change.</p>
+                <p><strong>Impact: </strong> Someone could use this chart to argue that workplace gender policies are no longer needed. Each choice can be defended on its own (Ex: "we focused on major economies," "percent change is standard") which is what makes the deception hard to challenge.</p>
             </div>
         </section>
 
         <section class="viz-section">
           <div class="writeup">
-            <p><strong>Data & Development Process: </strong>We used the raw data file from the Gender Equality Indicators 1960-2017 data set from the World Bank Data by Indicators. We didn’t 
+            <p><strong>Data & Development Process: </strong> We used the raw data file from the Gender Equality Indicators 1960-2017 data set from the World Bank Data by Indicators. We didn’t 
               use the curated CSV file as we wanted to have more raw data to work with.<br>
               For group participation, Sammi and Nithya did the visualization code, including the white hat and black hat visualizations, with help from Harini. Harini worked on the page 
               styling and HTML layout, wrote final write-up elements, and recorded the demo video with input from Sammi and Nithya. We spent roughly 10-15 people-hours in total. The parts 
               that took the most time were analyzing the data and extracting accurate and clear visualizations from them and coming up with clear differences between the two visualizations. 
               We spent a lot of time coming up with ways to make sure the white hat visualization is especially clear and easy to interpret for the audience, especially with the large dataset. </p>
-              <p><strong>AI Usage: </strong></p>
+              <p><strong>AI Usage: </strong> For the white hat visualization, AI was in a couple of different areas. We started by using AI to draft the code and think of different types of visualization 
+                we could use; we used it to draft the code and interactively tailor the visualization to use the layout we wanted and the varibales/categories we wanted in order to accurately answer 
+                the main question that we were using the visualization for. It was an interactive process where we went back and forth creating drafts and then changing them to best match the final 
+                chart we wanted and the functionality we were looking for. We also used it to help us brainstorm ideas of how to be very transparent and clean with our data in order to ensure there 
+                was no confusion or misleading in the visualization and explain parts of the dataset to ensure we were using it correctly. For the black hat visualization, we used Claude Code (Anthropic) to find misleading trends in the data, brainstorm deceptive design techniques, and draft the 
+                initial D3 code and write-up. We then tested the chart, checked the numbers, edited the text, and made all final design decisions ourselves. </p>
           </div>
         </section>
     </main>
